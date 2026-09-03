@@ -4,6 +4,7 @@ const app = express();
 const port = 3000;
 
 const flags = [];
+let nextId = 1;
 
 app.use(express.json());
 
@@ -12,8 +13,27 @@ app.get("/flags", (req, res) => {
 });
 
 app.post("/flags", (req, res) => {
-  flags.push(req.body);
-  res.json(req.body);
+  const { name, enabled, environment } = req.body;
+
+  if (!name || enabled === undefined || !environment) {
+    return res.status(400).json({
+      error: "name, enabled, and environment are required",
+    });
+  }
+
+  if (
+    typeof name !== "string" ||
+    typeof enabled !== "boolean" ||
+    typeof environment !== "string"
+  ) {
+    res.status(400).json({ error: "Invalid field types" });
+  }
+
+  const flag = { id: nextId, name, enabled, environment };
+  flags.push(flag);
+  nextId++;
+
+  res.status(201).json(flag);
 });
 
 app.listen(port, () => {
