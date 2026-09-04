@@ -84,6 +84,19 @@ app.patch("/flags/:id", (req, res) => {
   res.status(200).json(flag);
 });
 
+app.delete("/flags/:id", (req, res) => {
+  const { id } = req.params;
+
+  const index = flags.findIndex((flag) => flag.id === Number(id));
+
+  if (index === -1) {
+    return res.status(404).json({ error: "Feature flag not found" });
+  }
+  flags.splice(index, 1);
+
+  res.status(200);
+});
+
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
