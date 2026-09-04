@@ -12,6 +12,18 @@ app.get("/flags", (req, res) => {
   res.json(flags);
 });
 
+app.get("/flags/:id", (req, res) => {
+  const { id } = req.params;
+
+  const flag = flags.find((flag) => flag.id === Number(id));
+
+  if (!flag) {
+    return res.status(404).json({ error: "Feature flag not found" });
+  }
+
+  res.status(200).json(flag);
+});
+
 app.post("/flags", (req, res) => {
   const { name, enabled, environment } = req.body;
 
