@@ -48,6 +48,42 @@ app.post("/flags", (req, res) => {
   res.status(201).json(flag);
 });
 
+app.patch("/flags/:id", (req, res) => {
+  const { id } = req.params;
+
+  const flag = flags.find((flag) => flag.id === Number(id));
+
+  if (!flag) {
+    return res.status(404).json({ error: "Feature flag not found" });
+  }
+
+  const { name, enabled, environment } = req.body;
+
+  if (
+    (name !== undefined && typeof name !== "string") ||
+    (enabled !== undefined && typeof enabled !== "boolean") ||
+    (environment !== undefined && typeof environment !== "string")
+  ) {
+    return res.status(400).json({
+      error: "Invalid field types",
+    });
+  }
+
+  if (name !== undefined) {
+    flag.name = name;
+  }
+
+  if (enabled !== undefined) {
+    flag.enabled = enabled;
+  }
+
+  if (environment !== undefined) {
+    flag.environment = environment;
+  }
+
+  res.status(200).json(flag);
+});
+
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
