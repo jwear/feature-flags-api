@@ -94,7 +94,7 @@ app.delete("/flags/:id", (req, res) => {
   }
   flags.splice(index, 1);
 
-  res.status(200);
+  res.status(204).send();
 });
 
 app.listen(port, () => {

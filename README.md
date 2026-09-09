@@ -10,7 +10,7 @@ This project is built with Node.js and Express and focuses on common backend API
 - Express
 - JavaScript
 
-## Planned Endpoints
+## Endpoints
 
 | Method | Endpoint     | Description              |
 | ------ | ------------ | ------------------------ |
@@ -26,4 +26,28 @@ Install dependencies:
 
 ```bash
 npm install
+```
+
+## Run in development
+
+Start the server with nodemon:
+
+```bash
+npm run dev
+```
+
+Nodemon automatically restarts the server when source files change.
+
+## Run normally
+
+Start the server with Node.js:
+
+```bash
+npm start
+```
+
+The API runs locally at:
+
+```bash
+http://localhost:3000
 ```
